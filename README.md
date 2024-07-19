@@ -1,23 +1,23 @@
 # sidecar-container-example
 
-This repository contains the code necessary to test the "new" sidecar-container feature introduced in Kubernetes 1.28 (alpha) and Kubernetes 1.29 (beta, enabled by default)
+This repository contains the code necessary to test the "new" sidecar-container feature introduced in Kubernetes 1.28 (alpha) and Kubernetes 1.29 (beta, enabled by default).
 
 ## Introduction
 
 The idea of this very basic demo is to test the race condition between an app and a utility sidecar (for a database connection for example) in order to run properly.
 
-Here is an example with someone who had the exact same issue than a friend of mine with cloud-sql sidecar (funny coincidence).
+Here is an example with someone who had the exact same issue than a friend of mine with cloud-sql sidecar (*funny* coincidence).
 
 * [hwchiu.medium.com/exploring-kubernetes-1-28-sidecar-container-support-ed1a39ac7fe0](https://hwchiu.medium.com/exploring-kubernetes-1-28-sidecar-container-support-ed1a39ac7fe0)
 
-This example uses 2 docker images unly built for amd64 architectures. If you run on arm64 nodes (or windows nodes LOL), it will fail. See the images files in the repository:
+This example uses 2 docker images only built for amd64 architectures. If you run on arm64 nodes (or windows nodes LOL), it will fail. See the images files in the repository:
 
 * sidecar-user/Dockerfile
 * slow-sidecar/Dockerfile
 
-slow-sidecar is a basic helloworld webserver (from another project [vhelloworld](https://github.com/zwindler/vhelloworld)) that's sleeps 5 seconds before serving on port 8081.
+**slow-sidecar** is a basic helloworld webserver in *V lang* (from another project [vhelloworld](https://github.com/zwindler/vhelloworld)) that's sleeps 5 seconds before serving on port 8081.
 
-sidecar-user is a bash script that does a `curl` and `exit 1` if the `curl` call fails.
+**sidecar-user** is a bash script that does a `curl` and `exit 1` if the `curl` call fails.
 
 ## Prerequisites
 
@@ -25,7 +25,7 @@ As said before, the feature is introduced in Kubernetes 1.28 as an alpha feature
 
 As of Kubernetes 1.29, this feature graduated as beta and should be enabled by default on your cluster.
 
-For more information see [kubernetes.io/docs/concepts/workloads/pods/sidecar-containers](https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/).
+For more information see official documentation [kubernetes.io/docs/concepts/workloads/pods/sidecar-containers](https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/).
 
 ## Without sidecar containers
 
@@ -221,7 +221,7 @@ Sadly this will require you to change your main app code or Docker image, but yo
 
 The first one is a best practice when dealing with microservices and you should consider it anyway.
 
-the second one is a patch on a wooden leg. I strongly advise against it because startup speed can vary and adding too much delay is bad as well when dealing with incidents and bugs, leading to other issues later.
+The second one is a patch on a wooden leg. I strongly advise against it because startup speed can vary in the sidecar and adding too much delay in the app is bad as well when dealing with incidents and bugs (leading to other issues later).
 
 ## building the images
 
