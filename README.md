@@ -112,7 +112,7 @@ To avoid having this kind of race condition, let's update the manifest by conver
 
 This "trick" is the way to tell Kubernetes to run this container as an initContainer but NOT wait until it finishes (it won't ever since it's a webserver listening on 8081 forever) to start the main app.
 
-```yaml
+```diff
 apiVersion: batch/v1
 kind: CronJob
 metadata:
